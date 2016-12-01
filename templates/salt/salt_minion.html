@@ -1,0 +1,70 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">SaltStack</a>
+				</li>
+				<li class="active">Minion Status  |  Num:{{minion_count}}</li>
+			</ul><!-- .breadcrumb -->
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+			
+		<table class="table table-striped table-bordered">
+   			<thead>
+      			<tr>
+         			<th>Host ID</th>
+         			<th>Running Status</th>
+         			<th>Action</th>
+      			</tr>
+   			</thead>
+  
+   			{% for host,value in minion_list.items %}
+      		<tbody>
+      			<tr>
+         			<td>{{host}}</td> 
+	     			<td>{{value}}</td>
+         			<td>						
+          				<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+							<!--
+		  					<button class="btn btn-xs btn-warning">
+								<i class="icon-refresh bigger-120"><a href="/salt/minion/?restart={{host}}">重启Minion</a></i>
+							</button>
+							<button class="btn btn-xs btn-inverse">
+								<i class="icon-ok bigger-120"><a href="/salt/minion/?updata={{host}}">更新信息</a></i>
+							</button>
+         					<button class="btn btn-xs btn-danger">
+								<i class="icon-trash bigger-120"><a href="/salt/minion/?remove={{host}}">删除</a></i>
+							</button>
+							-->
+							<button class="btn btn-xs btn-warning" onclick="window.location='/salt/minion/?restart=={{host}}'">
+								<i class="icon-refresh bigger-120"><a>重启Minion</a></i>
+							</button>
+							<!--
+							<button class="btn btn-xs btn-inverse" onclick="window.location='/salt/minion/?updata={{host}}'">
+								<i class="icon-exchange bigger-120"><a>更新信息</a></i>
+							</button>
+							-->
+							<button class="btn btn-xs btn-danger" onclick="window.location='/salt/minion/?remove={{host}}'">
+								<i class="icon-trash bigger-120"><a>删除</a></i>
+							</button>
+          				</div>
+         			</td>
+      			</tr>
+      		</tbody>
+    		{%endfor%}
+		</table>
+
+	</div>
+{% endblock %}
+

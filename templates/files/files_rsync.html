@@ -1,0 +1,85 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">文件管理</a>
+				</li>
+				<li class="active">文件分发</li>
+			</ul><!-- .breadcrumb -->
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+
+		<div class="page-content">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="widget-box">
+						<div class="widget-header header-color-blue2">
+							<h4 class="lighter smaller">现有文件</h4>
+						</div>
+						<form class="form-horizontal" role="form" action="/file/rsync/" method="post">
+						<div class="widget-body">
+							<div class="widget-main padding-8">						
+								{% for list in file_list %}
+									<label class="checkbox-inline">
+										<input type="checkbox" id="inlineCheckbox1" name="file" value="{{list}}">
+										 File Name  | {{list}} 
+									</label>
+									<br> 
+        						{%endfor%}
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<div class="col-sm-6">
+				<div class="widget-box">
+					<div class="widget-header header-color-green2">
+						<h4 class="lighter smaller">主机列表</h4>
+					</div>
+					<div class="widget-body">
+						<div class="widget-main padding-8">
+							{% for list in host_list %}
+								<label class="checkbox-inline">
+									<input type="checkbox" id="inlineCheckbox1" name="ip" value="{{list.server_id}}">
+								     IP:{{list.hostname}} | Notes:{{list.notes}}
+								</label> <br>	
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class "space-24"> 
+			<!--<h3 class="header smaller lighter blue">&nbsp &nbsp &nbsp &nbsp </h3>-->
+			<!--<h3 class="header smaller lighter blue"> 请选择文件信息以及主机信息。。。<br></h3>-->
+			<h3 class="header smaller lighter blue">{{logs}}<br></h3>
+		</div>
+		<div class="row-fluid">
+			<div class="block span16"> <p class="block-heading">传输保存路径</p>
+        		<div class="block-body gallery" rows="15" cols="10" style="text-align: left;">  
+           			<input type="text" name="dir" placeholder="Input server dir ">
+        		</div>
+			</div>
+		</div>
+			<br></br>
+		<div class="row">
+			<div class="col-xs-12 col-sm-5">
+				<div class="control-group">
+					<button class="btn btn-info" type="submit">	<i class="icon-ok bigger-110"></i>开始传输</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}
+

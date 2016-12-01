@@ -1,0 +1,130 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">资产管理</a>
+				</li>
+				<li class="active">修改主机信息</li>
+			</ul><!-- .breadcrumb -->
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+
+  	<div class="page-content">
+	    <div class="row">
+		    <div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+				<form class="form-horizontal" role="form" action="/cmdb/info/?save={{info.server_id}}" method="post" >
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Hostanme </label>
+						<div class="col-sm-9">
+			    		    <input type="text"  name="hostname" value="{{info.hostname}}" placeholder="Hostanme" class="col-xs-10 col-sm-5" />
+						</div>
+				    </div>
+					<div class="space-4"></div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Host IP </label>
+					   	<div class="col-sm-9">
+					   		<input readonly="" type="text" id="form-input-readonly" name="ip" value="{{info.ip}}" class="col-xs-10 col-sm-5" />
+						</div>
+					</div>
+					<div class="space-4"></div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> CPU </label>
+							<div class="col-sm-9">
+								<input type="text" id="form-field-2" name="cpu" value="{{info.cpu}}" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+                    <div class="space-4"></div>
+
+                    <div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 内存 </label>
+							<div class="col-sm-9">
+								<input type="text" id="form-field-2" name="men" value="{{info.men}}" class="col-xs-10 col-sm-5" />
+							</div>
+					</div>
+                    <div class="space-4"></div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 硬盘 </label>
+						<div class="col-sm-9">
+							<input type="text" id="form-field-2" name="disk" value="{{info.disk}}" class="col-xs-10 col-sm-5" />
+						</div>
+					</div>
+                    <div class="space-4"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-field-2">操作系统</label>
+                         <div class="col-sm-9">
+                            <input type="text" id="form-field-2" name="os" value="{{info.os}}" class="col-xs-10 col-sm-5" />
+                        </div>
+                    </div>
+                    <div class="space-4"></div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 位置</label>
+						<div class="col-sm-9">
+							<input type="text" id="form-field-2" name="position" value="{{info.position}}" class="col-xs-10 col-sm-5" />
+						</div>
+					</div>
+					<div class="space-4"></div>
+
+					<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 所有者 </label>
+						<div class="col-sm-9">
+							<input type="text" id="form-field-2" name="owner" value="{{info.owner}}" placeholder="notes" class="col-    xs-10 col-sm-5" />
+						 </div>
+					 </div>
+					 <div class="space-4"></div>
+
+                    <div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 所属组 </label>
+						<div class="col-sm-9">
+							<input type="text" id="form-field-2" name="group" value="{{info.group}}" placeholder="notes" class="col-xs-10 col-sm-5" />
+						</div>
+					</div>
+					<div class="space-4"></div>
+
+                    <div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 备注</label>
+						<div class="col-sm-9">
+							<input type="text" id="form-field-2" name="notes" value="{{info.notes}}" placeholder="group" class="col-xs-10 col-sm-5" />
+						</div>
+					</div>
+					<div class="space-4"></div>
+
+					<!-- 不能改 之都
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Readonly field </label>
+						<div class="col-sm-9">
+    						<input readonly="" type="text" class="col-xs-10 col-sm-5" id="form-input-readonly" value="This text field is readonly!" />
+						</div>
+					</div>
+					-->
+					<div class="clearfix form-actions">
+						<div class="col-md-offset-3 col-md-9">
+							<button class="btn btn-info" type="submit">
+								<i class="icon-ok bigger-110"></i>
+								提交修改
+							</button>
+						</div>
+					</div>
+				</form>
+				{{log}}
+			</div>
+		</div>
+	</div>
+    </div>
+{% endblock %}
+

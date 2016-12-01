@@ -1,0 +1,144 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">Dashboard</a>
+				</li>
+				<li class="active">{{master_status}}</li> 
+			</ul><!-- .breadcrumb -->
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+
+		<table class="table table-striped table-bordered"  leftmargin="0" topmargin="0"  marginwidth="0" marginheight="0">
+			<thead>
+				<tr>
+					<th>user</th>
+					<th>nice </th>
+					<th>system </th>
+					<th>idle </th>
+					<th>iowait </th>
+					<th>irq </th>
+					<th>softirq </th>
+					<th>steal </th>
+					<th>guest </th> 
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{cpu.user}}</td> 
+					<td>{{cpu.nice}}</td>
+					<td>{{cpu.system}}</td>
+					<td>{{cpu.idle}}</td>
+					<td>{{cpu.iowait}}</td>
+					<td>{{cpu.irq}}</td>
+					<td>{{cpu.softirq}}</td>
+					<td>{{cpu.steal}}</td>
+					<td>{{cpu.guest}}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>total</th>
+					<th>available</th>
+					<th>percent</th>
+					<th>free</th>
+					<th>active</th>
+					<th>inactive</th>
+					<th>buffers</th>
+					<th>cached</th>
+					<th>buffers</th> 
+				</tr>
+			</thead> 
+			<tbody>
+				<tr>
+					<td>{{men.total}}</td> 
+					<td>{{men.available}}</td>
+					<td>{{men.percent}}</td>
+					<td>{{men.free}}</td>
+					<td>{{men.active}}</td>
+					<td>{{men.inactive}}</td>
+					<td>{{men.buffers}}</td>
+					<td>{{men.cached}}</td>
+					<td>{{men.buffers}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+					
+    	<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Device</th>
+					<th>Mountpoint</th>
+					<th>Fstype</th>
+					<th>Opts</th>
+				</tr>
+			</thead>
+  
+			{% for i in disk %}
+			<tbody>
+				<tr>
+					<td>{{i.device}}</td> 
+					<td>{{i.mountpoint}}</td>
+					<td>{{i.fstype}}</td>
+					<td>{{i.opts}}</td>
+				</tr>
+			</tbody>
+			{%endfor%}
+		</table>
+
+
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Terminal</th>
+					<th>Host</th>
+					<th>Started</th>
+				</tr>
+			</thead>
+  
+			{% for login in sys_user %}
+			<tbody>
+				<tr>
+					<td>{{login.name}}</td> 
+					<td>{{login.terminal}}</td>
+					<td>{{login.host}}</td>
+					<td>{{login.started}}</td>
+				</tr>
+			</tbody>
+			{%endfor%}
+		</table>
+
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th>Network RX</th>
+					<th>Network TX</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{net_sent}}</td> 
+					<td>{{net_rcvd}}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+	</div>
+{% endblock %}
+

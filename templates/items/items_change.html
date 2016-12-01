@@ -1,0 +1,109 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">应用管理</a>
+				</li>
+				<li class="active">修改应用信息</li>
+			</ul><!-- .breadcrumb -->
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+
+		<div class="page-content">
+	    	<div class="row">
+		    	<div class="col-xs-12">
+					<form class="form-horizontal" role="form" action="/items/info/?save={{items.items_id}}" method="post" >
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">应用主机</label>
+							<div class="col-sm-9">
+			    		    	<input type="text" name="hostname" value="{{items.hostname}}" placeholder="{{items.hostname}}" class="col-xs-10 col-sm-5" />
+							</div>
+				    	</div>
+						<div class="space-4"></div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">应用名称</label>
+					   		<div class="col-sm-9">
+					   			<input type="text" name="item_name" value="{{items.item_name}}" placeholder="{{items.item_name}}" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">应用服务脚本</label>
+							<div class="col-sm-9">
+								<input type="text" name="service" value="{{items.service}}" placeholder="{{items.service}}" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+              	        <div class="space-4"></div>
+						
+						<div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">应用更新脚本</label>
+							<div class="col-sm-9">
+								<input type="text"  name="updata" value="{{items.updata}}" placeholder="{{items.updata}}" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">应用侦听端口</label>
+							<div class="col-sm-9">
+								<input type="text" name="port" value="{{items.port}}" placeholder="{{items.port}}" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+	
+						<div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">应用状态</label>
+							<div class="col-sm-9">
+								<input type="text" name="status" value="{{items.status}}" placeholder="{{items.status}}" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+						
+						<div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">所属组</label>
+							<div class="col-sm-9">
+								<input type="text" name="group" value="{{items.group}}" placeholder="{{items.group}}" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+						
+						<div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">备注</label>
+							<div class="col-sm-9">
+								<input type="text" name="notes" value="{{items.notes}}" placeholder="{{items.notes}}" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+												
+						<div class="space-4"></div>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-info" type="submit">
+									<i class="icon-ok bigger-110"></i>
+									提交修改
+								</button>
+							</div>
+						</div>
+					</form>
+					{{log}}
+				</div>
+			</div>
+		</div>	
+		
+	
+	</div>
+{% endblock %}
+

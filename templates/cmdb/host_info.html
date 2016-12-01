@@ -1,0 +1,70 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">资产管理</a>
+				</li>
+				<li class="active">主机信息</li>
+			</ul><!-- .breadcrumb -->
+			<a href="/cmdb/info/?refresh=1"><i class="icon-refresh"></i> 刷新</a>
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+		<table class="table table-striped table-bordered">
+   			<thead>
+      			<tr>
+         			<th>主机名</th>
+         			<th>IP</th>
+         			<th>CPU</th>
+         			<th>内存(M)</th>
+         			<th>磁盘大小(G)</th>
+					<th>操作系统</th>
+         			<th>位置</th>
+         			<th>所有者</th>
+         			<th>所属组</th>
+		 			<th>备注</th>
+         			<th>操作</th>
+      			</tr>
+   			</thead>
+  
+   			{% for list in server_list %}
+      		<tbody>
+      			<tr>
+         			<td>{{list.hostname}}</td> 
+	     			<td>{{list.ip}}</td>
+	     			<td>{{list.cpu}}</td>
+	     			<td>{{list.men}}</td>
+	     			<td>{{list.disk}}</td>
+					<td>{{list.os}}</td>
+	     			<td>{{list.position}}</td>
+	     			<td>{{list.owner}}</td>
+         			<td>{{list.group}}</td>
+		 			<td>{{list.notes}}</td>
+         			<td>
+          				<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+		  					<button class="btn btn-xs btn-info" onclick="window.location='/cmdb/info/?change={{list.server_id}}'">
+								 <i class="icon-edit bigger-120"><a>Edit</a></i>
+							</button>
+         					<button class="btn btn-xs btn-danger" onclick="window.location='/cmdb/info/?remove={{list.server_id}}'">
+								<i class="icon-trash bigger-120"><a>Delete</a></i>
+							</button>
+          				</div>
+         			</td>
+      			</tr>
+      		</tbody>
+    		{%endfor%}
+		</table>
+			{{log}}	
+	</div>
+{% endblock %}
+

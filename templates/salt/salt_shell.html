@@ -1,0 +1,78 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">运维管理</a>
+				</li>
+				<li class="active">命令执行</li>
+			</ul><!-- .breadcrumb -->
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+		
+		<div class="page-content">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="widget-box">
+						<div class="widget-header header-color-blue2">
+							<h4 class="lighter smaller">主机信息</h4>
+						</div>
+						<div class="widget-body">
+							<div class="widget-main padding-8">								
+								<form class="" action="/salt/shell/" method="post">
+									<table>
+									<thead> <tr></tr></thead>
+								
+        							{% for list in host_list %}
+									<tbody> <tr> <td>
+            							<label class="checkbox-inline">
+                 							<input type="checkbox" id="inlineCheckbox1" name="name_id" value="{{list}}">
+                 								Name ID:  {{list}} 
+         							    </label>	
+        							{%endfor%}
+									</tr></tbody></table>
+    								<hr>
+    								<h1>输入要执行的命令</h1>
+    								<input type="text" name="command" class="span3" size="60" placeholder="Input shell"> 
+									<br></br>
+    								<button type="submit" class="btn btn-sm btn-success">
+										执行 <i class="icon-arrow-right icon-on-right bigger-110"></i>
+									</button>
+    							</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			<div class="col-sm-6" >
+				<div class="widget-box">
+					<div class="widget-header header-color-green2">
+						<h4 class="lighter smaller">执行结果</h4>
+					</div>
+					<div class="widget-body" class="margin-top">
+						<div class="widget-main padding-8">
+						<pre> 
+							{% for res in result %}
+								{% for key,value in res.items %}
+									<br>{{key}} </br> {{value}}
+								{%endfor%}
+							{%endfor%}
+						</pre>
+						{{log}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+

@@ -1,0 +1,94 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">邮件配置</a>
+				</li>
+				<li class="active">添加邮件配置</li>
+			</ul><!-- .breadcrumb -->
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+
+				
+		<div class="page-content">
+	    	<div class="row">
+		    	<div class="col-xs-12">
+					<form class="form-horizontal" role="form" action="/main/mail/?save=1" method="post" >
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">Mail Host</label>
+							<div class="col-sm-9">
+			    		    	<input type="text" name="mail_host" placeholder="设置服务器" class="col-xs-10 col-sm-5" />
+							</div>
+				    	</div>
+						<div class="space-4"></div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">Mail Port</label>
+					   		<div class="col-sm-9">
+					   			<input type="text" name="mail_port" placeholder="端口" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">Mail User</label>
+							<div class="col-sm-9">
+								<input type="text" name="mail_user" placeholder="用户名" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+              	        <div class="space-4"></div>
+						
+						<div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">Mail Password</label>
+							<div class="col-sm-9">
+								<input type="text"  name="mail_pass" placeholder="口令" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">Mail Postfix</label>
+							<div class="col-sm-9">
+								 <input type="text"  name="mail_postfix" placeholder="发件箱的后缀" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">To List</label>
+							<div class="col-sm-9">
+								<input type="text"  name="to_list" placeholder="收件人1;收件人2" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+
+						<div class="space-4"></div>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-info" type="submit">
+									<i class="icon-ok bigger-110"></i>
+									添加
+								</button>
+							</div>
+						</div>
+					</form>
+					{{log}}
+				</div>
+			</div>
+		</div>	
+
+			{{result}}
+    </div>
+{% endblock %}
+

@@ -1,0 +1,90 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">资产管理</a>
+				</li>
+				<li class="active">修改SSH信息</li>
+			</ul><!-- .breadcrumb -->
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+
+  	<div class="page-content">
+	    <div class="row">
+		    <div class="col-xs-12">
+			<!-- PAGE CONTENT BEGINS -->
+				<form class="form-horizontal" role="form" action="/cmdb/ssh/?save={{info.server_id}}" method="post" >
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Hostanme </label>
+						<div class="col-sm-9">
+			    		    <input readonly="" type="text"  name="hostname" value="{{info.hostname}}" placeholder="Hostanme" class="col-xs-10 col-sm-5" />
+						</div>
+				    </div>
+					<div class="space-4"></div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> Host IP </label>
+					   	<div class="col-sm-9">
+					   		<input readonly="" type="text" id="form-input-readonly" name="ip" value="{{info.ip}}" placeholder="ip" class="col-xs-10 col-sm-5" />
+						</div>
+					</div>
+					<div class="space-4"></div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Username </label>
+							<div class="col-sm-9">
+								<input type="text" id="form-field-2" name="username" value="{{info.username}}" placeholder="username" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+                    <div class="space-4"></div>
+
+                    <div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Password </label>
+							<div class="col-sm-9">
+								<input type="text" id="form-field-2" name="password" value="{{info.password}}" placeholder="password" class="col-xs-10 col-sm-5" />
+							</div>
+					</div>
+                    <div class="space-4"></div>
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Port </label>
+						<div class="col-sm-9">
+							<input type="text" id="form-field-2" name="port" value="{{info.port}}" placeholder="port" class="col-xs-10 col-sm-5" />
+						</div>
+					</div>
+                    <div class="space-4"></div>
+
+                    <div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" > 备注</label>
+						<div class="col-sm-9">
+							<input type="text" name="notes" value="{{info.notes}}" placeholder="group" class="col-xs-10 col-sm-5"/>
+						</div>
+					</div>
+					<div class="space-4"></div>
+
+					<div class="clearfix form-actions">
+						<div class="col-md-offset-3 col-md-9">
+							<button class="btn btn-info" type="submit">
+								<i class="icon-ok bigger-110"></i>
+								提交修改
+							</button>
+						</div>
+					</div>
+				</form>
+				{{log}}
+			</div>
+		</div>
+	</div>
+    </div>
+{% endblock %}
+

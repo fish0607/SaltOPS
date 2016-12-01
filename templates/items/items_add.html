@@ -1,0 +1,127 @@
+{% extends 'base.html'%}
+{% block head %}
+	<div class="main-content">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home home-icon"></i>
+					<a href="#">应用管理</a>
+				</li>
+				<li class="active">添加应用信息</li>
+			</ul><!-- .breadcrumb -->
+			<div class="nav-search" id="nav-search">
+				<form class="form-search">
+					<span class="input-icon">
+						<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+						<i class="icon-search nav-search-icon"></i>
+					</span>
+				</form>
+			</div><!-- #nav-search -->
+			<br>
+		</div>
+
+
+		<div class="page-content">
+	    	<div class="row">
+		    	<div class="col-xs-12">
+					<form class="form-horizontal" role="form" action="/items/add/" method="post" >
+						<!--
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">Items Host *</label>
+							<div class="col-sm-9">
+			    		    	<input type="text" name="host" placeholder="host ip" class="col-xs-10 col-sm-5" />
+							</div>
+				    	</div>
+						<div class="space-4"></div>
+						-->
+						<div class="form-group">
+                           <label class="col-sm-3 control-label">主机名称</label>
+                            <div class="col-sm-4">
+								<select name="hostname" class="span4">
+      							{% for list in server_list %}
+           						<option value="{{list.hostname}}"> 
+									HostName:{{list.hostname}} &nbsp &nbsp &nbsp &nbsp {{list.notes}} 
+								</option>
+        						{%endfor%}
+    							</select>
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">应用名称</label>
+					   		<div class="col-sm-9">
+					   			<input type="text" name="item_name" placeholder="item_name" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+						
+						<div class="form-group">
+							<label class="col-sm-3 control-label no-padding-right">应用服务脚本</label>
+							<div class="col-sm-9">
+								<input type="text" name="service" placeholder="service" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+              	        <div class="space-4"></div>
+						
+						<div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">应用更新脚本</label>
+							<div class="col-sm-9">
+								<input type="text"  name="updata" placeholder="updata" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+						
+                        
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">应用侦听端口</label>
+							<div class="col-sm-9">
+								<input type="text"  name="port" placeholder="port" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+	
+						<div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">应用状态</label>
+							<div class="col-sm-9">
+								<input type="text"  name="status" placeholder="status" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+						
+						<div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">所属组</label>
+							<div class="col-sm-9">
+								<input type="text"  name="group" placeholder="group" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+						
+						<div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">备注</label>
+							<div class="col-sm-9">
+								<input type="text"  name="notes" placeholder="notes" class="col-xs-10 col-sm-5" />
+							</div>
+						</div>
+						<div class="space-4"></div>
+												
+						
+						
+						<div class="space-4"></div>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-info" type="submit">
+									<i class="icon-ok bigger-110"></i>
+									添加
+								</button>
+							</div>
+						</div>
+					</form>
+					{{log}}
+				</div>
+			</div>
+		</div>	
+		
+	
+	</div>
+{% endblock %}
+
