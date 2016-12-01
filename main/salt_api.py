@@ -1,60 +1,160 @@
-# -*- coding: utf-8 -*-
-import os,sys
-import salt.client
-import salt.config
-import salt.loader
-import salt.key
+#!/usr/bin/env python
+#coding=utf-8
 
-def salt_master_status():
-	while os.system("/etc/init.d/salt-master status >/dev/null") != 0:
-		#master_status = "salt-master 未运行。"
-		#time.sleep(5)
-		os.system('/etc/init.d/salt-master start')
-		time.sleep(5)
-	master_stauts = os.popen('/etc/init.d/salt-master status').read()
-	#key_list
-	Accepted_Keys = os.listdir('/etc/salt/pki/master/minions')
-	Denied_Keys = os.listdir('/etc/salt/pki/master/minions_denied')
-	Unaccepted_Keys = os.listdir('/etc/salt/pki/master/minions_pre')
-	Rejected_Keys = os.listdir('/etc/salt/pki/master/minions_rejected')
+import urllib2, urllib, json
+import ssl
+import json
+import re
+ssl._create_default_https_context = ssl._create_unverified_context
+#Python 2.7.9 之后版本引入了一个新特性
+#当你urllib.urlopen一个 https 的时候会验证一次 SSL 证书
+#当目标使用的是自签名的证书时就会爆出一个
+#urllib.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:581)> 的错误消息，
+
+
+
+class SaltAPI:
+	def __init__(self,url,username,password):
+		self.__url = url.rstrip('/') 
+		#移除URL末尾的/
+		self.__username = username
+		self.__password = password
+		self.__token_id = self.SaltLogin()
+	#登陆获取token
+	def SaltLogin(self):
+		params = {'eauth': 'pam', 'username': self.__username, 'password': self.__password}
+		encode = urllib.urlencode(params)
+		obj = urllib.unquote(encode)
+		headers = {'X-Auth-Token':''}
+		url = self.__url + '/login'
+		req = urllib2.Request(url, obj, headers)
+		opener = urllib2.urlopen(req)
+		content = json.loads(opener.read())
+		try:
+			token = content['return'][0]['token']
+			return token
+		except KeyError:
+			raise KeyError
+	#推送请求
+	def PostRequest(self, obj, prefix='/'):
+		url = self.__url + prefix
+		headers = {'X-Auth-Token': self.__token_id}
+		if obj:
+			data, number = re.subn("arg\d*", 'arg', obj) 
+			#将arg1 arg2这些关键字都替换成arg，number为替换次数
+		else:
+			data=None
+		req = urllib2.Request(url, data, headers)  
+		#obj为传入data参数字典，data为None 则方法为get，有date为post方法
+		opener = urllib2.urlopen(req)
+		content = json.loads(opener.read())
+		return content
+	#执行命令
+	def SaltCmd(self,tgt,fun,client='local_async',expr_form='glob',arg=None,**kwargs):
+		params = {'client':client, 'fun':fun, 'tgt':tgt, 'expr_form':expr_form}
+		if arg:
+			a=arg.split(',') #参数按逗号分隔
+			for i in a:
+				b=i.split('=') #每个参数再按=号分隔
+				if len(b)>1:
+					params[b[0]]='='.join(b[1:]) #带=号的参数作为字典传入
+				else:
+					params['arg%s'%(a.index(i)+100)]=i
+		if kwargs:
+			params=dict(params.items()+kwargs.items())
+		# print params
+		obj = urllib.urlencode(params)
+		res = self.PostRequest(obj)
+		# print res
+		return res
+	#runner=salt-run=master本地执行
+	def SaltRun(self,fun,client='runner_async',arg=None,**kwargs):
+		params = {'client':client, 'fun':fun}
+		if arg:
+			a=arg.split(',') #参数按逗号分隔
+			for i in a:
+				b=i.split('=') #每个参数再按=号分隔
+				if len(b)>1:
+					params[b[0]]='='.join(b[1:]) #带=号的参数作为字典传入
+				else:
+					params['arg%s'%a.index(i)]=i
+		if kwargs:
+			params=dict(params.items()+kwargs.items())
+		# print params
+		obj = urllib.urlencode(params)
+		res = self.PostRequest(obj)
+		return res
+	#获取JOB ID的详细执行结果
+	def SaltJob(self,jid=''):
+		if jid:
+			prefix = '/jobs/'+jid
+		else:
+			prefix = '/jobs'
+		res = self.PostRequest(None,prefix)
+		# print res
+		return res
+	#获取grains
+	def SaltMinions(self,minion=''):
+		if minion and minion!='*':
+			prefix = '/minions/'+minion
+		else:
+			prefix = '/minions'
+		res = self.PostRequest(None,prefix)
+		return res
+	#获取events
+	def SaltEvents(self):
+		prefix = '/events'
+		res = self.PostRequest(None,prefix)
+		return res
+
+	#列出KEY
+	def ListKey(self):
+		prefix = '/keys'
+		content = self.PostRequest(None,prefix)
+		accepted = content['return']['minions']
+		denied = content['return']['minions_denied']
+		unaccept = content['return']['minions_pre']
+		rejected = content['return']['minions_rejected']
+		return accepted,denied,unaccept,rejected
+	#接受KEY
+	def AcceptKey(self, key_id):
+		params = {'client': 'wheel', 'fun': 'key.accept', 'match': key_id}
+		obj = urllib.urlencode(params)
+		content = self.PostRequest(obj)
+		ret = content['return'][0]['data']['success']
+		return ret
+	#删除KEY
+	def DeleteKey(self, key_id):
+		params = {'client': 'wheel', 'fun': 'key.delete', 'match': key_id}
+		obj = urllib.urlencode(params)
+		content = self.PostRequest(obj)
+		ret = content['return'][0]['data']['success']
+		return ret
+
+#测试：python manager.py shell ; from SALT.SaltAPI import * ; main()，代码修改了要ctrl+Z退出重进
+def main():
+	sapi = SaltAPI(url='https://10.163.254.240:8000',username='saltstack',password='saltstack')
+	#列出key
+	print sapi.ListKey()
+	#执行命令
+	'''
+	tgt = 'Sina-EVA-GMDB'   #  '*'不能使用list类型
+	fun ='cmd.run'
+	client = 'local'
+	arg='ifconfig'
+	result = sapi.SaltCmd(tgt=tgt,fun=fun,arg=arg)
+	print result
+	jid = result['return'][0]['jid']
+	print jid
+	jidinfo=sapi.SaltJob(jid)
+	print jidinfo
+        #grains
+	print sapi.SaltMinions()
+	'''
+	#events
+	print sapi.SaltEvents()
 	
-	return master_stauts,Accepted_Keys,Denied_Keys,Unaccepted_Keys,Rejected_Keys
 
-def salt_minion_status():
-	client = salt.client.LocalClient()
-	Accepted_Keys = os.listdir('/etc/salt/pki/master/minions')
-	minion_count = 0
-	for i in os.walk('/etc/salt/pki/master/minions'):
-		minion_count += 1
-	for i in Accepted_Keys:
-		minion_list = client.cmd(i,'test.ping',[])
-	return minion_count,minion_list
-
-def salt_shell(host,cmd):
-	client = salt.client.LocalClient()
-	res = client.cmd(host,'cmd.run',[cmd])
-	return res
-
-def transfe_file(host,src_file,dsc_file):
-	client = salt.client.LocalClient()
-	res = client.cmd(host,'cp.get_file',src_file,dsc_file)
-	return res
-
-def salt_grains():
-	import salt.client
-	caller = salt.client.Caller()
-	caller.sminion.functions['grains.items']
-
-def salt_key_list():
-	client = salt.client.LocalClient()
-	key_manager = salt.key.Key(client.opts)
-	#key_manager.accept('QZ-MySQL-001')
-	list = key_manager.list_keys()
-	for key in list.items():
-		#print type(key)
-		#print key
-		for i in key:
-			#print type(i)
-			print i 
-salt_key_list()
+if __name__ == '__main__':
+	main()
 
