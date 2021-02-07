@@ -8,12 +8,27 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
         python-version: [2.7]
+        database:
+          mysql: 5.7
+    services:
+      database:
+        image: ${{ matrix.database }}
+        env:
+          MYSQL_ROOT_PASSWORD: 123456
+        ports:
+        - 3306:3306
+        volumes:
+        - type=tmpfs,destination=/var/lib/mysql
+
+    env:
+      DB_HOST: 127.0.0.1
+      DB_USER: root
+      DB_PASSWORD: 123456
 
     steps:
     - uses: actions/checkout@v2
