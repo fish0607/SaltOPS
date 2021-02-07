@@ -24,9 +24,9 @@ jobs:
       with:
         host port: 3306
         mysql version: 5.7
-        mysql root passwotd: 123456
+        mysql root password: 123456
         mysql database: salt_ops
-        mysql urser: salt_ops
+        mysql user: salt_ops
         mysql password: 123456
 
     - name: Install Dependencies
