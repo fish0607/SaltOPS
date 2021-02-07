@@ -103,8 +103,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'salt_ops',
         'HOST': '127.0.0.1',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'salt_ops',
+        'PASSWORD': 'salt_ops',
         'PORT': 3306,
 	}
 }
